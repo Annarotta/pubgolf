@@ -30,7 +30,7 @@ body { background:var(--cream); font-family:'DM Sans',sans-serif; color:var(--in
 #setup-screen { align-items:center; justify-content:center; padding:32px 24px; background:var(--green); position:relative; overflow:hidden; }
 #setup-screen::before { content:''; position:absolute; width:400px; height:400px; border-radius:50%; border:60px solid rgba(255,255,255,0.04); top:-100px; right:-100px; }
 #setup-screen::after  { content:''; position:absolute; width:300px; height:300px; border-radius:50%; border:40px solid rgba(255,255,255,0.04); bottom:-80px; left:-80px; }
-.logo  { font-family:'DM Serif Display',serif; font-size:52px; color:white; margin-bottom:4px; position:relative; z-index:1; }
+.logo { font-family:'DM Serif Display',serif; font-size:52px; color:white; margin-bottom:4px; position:relative; z-index:1; }
 .logo-sub { font-size:13px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-bottom:32px; position:relative; z-index:1; }
 .card { background:white; border-radius:20px; padding:28px 24px; width:100%; max-width:380px; position:relative; z-index:1; box-shadow:0 20px 60px rgba(0,0,0,0.2); }
 .lbl { font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; display:block; }
@@ -63,8 +63,6 @@ body { background:var(--cream); font-family:'DM Sans',sans-serif; color:var(--in
 
 /* HOLE AREA */
 .hole-area { flex:1; padding:16px; display:flex; flex-direction:column; gap:12px; overflow-y:auto; }
-
-/* Hole info card */
 .hole-top { background:white; border-radius:var(--radius); overflow:hidden; box-shadow:0 2px 16px rgba(0,0,0,0.06); }
 .hole-hdr { padding:12px 18px; display:flex; justify-content:space-between; align-items:center; }
 .hole-num-lbl { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.7); }
@@ -75,13 +73,11 @@ body { background:var(--cream); font-family:'DM Sans',sans-serif; color:var(--in
 .bar-name { font-family:'DM Serif Display',serif; font-size:20px; color:var(--green); margin-bottom:6px; }
 .drink-badge { display:inline-flex; align-items:center; gap:5px; background:var(--green-pale); border:1px solid var(--green-light); border-radius:8px; padding:5px 10px; font-size:12px; font-weight:600; color:var(--green); }
 .cap-badge { display:inline-flex; align-items:center; gap:5px; background:#fff3cd; border:1px solid var(--amber); border-radius:8px; padding:5px 10px; font-size:12px; font-weight:600; color:#7a4a00; margin-left:6px; }
-
-/* Rule card */
 .rule-card { background:var(--amber-light); border:1px solid var(--amber); border-radius:12px; padding:12px 14px; }
 .rule-ttl { font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; color:#7a4a00; margin-bottom:4px; }
 .rule-txt { font-size:13px; color:#5a3500; line-height:1.55; }
 
-/* Counter */
+/* COUNTER */
 .counter-card { background:white; border-radius:var(--radius); padding:18px; box-shadow:0 2px 16px rgba(0,0,0,0.06); }
 .counter-ttl { font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); text-align:center; margin-bottom:14px; }
 .counter-row { display:flex; align-items:center; justify-content:center; gap:16px; }
@@ -102,7 +98,7 @@ body { background:var(--cream); font-family:'DM Sans',sans-serif; color:var(--in
 .pbtn:active { transform:scale(0.9); background:var(--red-light); }
 .pnum { font-family:'DM Serif Display',serif; font-size:36px; color:var(--red); min-width:50px; text-align:center; }
 
-/* Action cards */
+/* ACTION CARDS */
 .act-card { background:white; border-radius:var(--radius); padding:18px; box-shadow:0 2px 16px rgba(0,0,0,0.06); }
 .act-ttl { font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
 .act-btn { width:100%; padding:14px; border-radius:12px; border:none; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600; cursor:pointer; margin-bottom:8px; transition:all 0.15s; -webkit-tap-highlight-color:transparent; display:block; }
@@ -111,14 +107,26 @@ body { background:var(--cream); font-family:'DM Sans',sans-serif; color:var(--in
 .btn-green { background:var(--green); color:white; }
 .btn-ghost { background:var(--cream); border:1.5px solid var(--border); color:var(--muted); }
 .btn-red   { background:var(--red); color:white; }
+.btn-amber { background:var(--amber); color:#3a2000; }
 
-/* Wheel */
+/* WHEEL */
 .wheel-wrap { display:flex; flex-direction:column; align-items:center; gap:16px; }
 .wheel-canvas-wrap { position:relative; }
-.wheel-ptr { position:absolute; top:-14px; left:50%; transform:translateX(-50%); font-size:28px; z-index:10; }
+.wheel-ptr { position:absolute; top:-14px; left:50%; transform:translateX(-50%); font-size:28px; z-index:10; pointer-events:none; }
 .spin-btn { padding:14px 32px; background:var(--green); color:white; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:600; cursor:pointer; }
 .spin-btn:disabled { background:var(--muted); cursor:not-allowed; }
-.wheel-res { font-family:'DM Serif Display',serif; font-size:20px; color:var(--green); text-align:center; padding:12px 16px; background:var(--green-pale); border-radius:12px; border:1px solid var(--green-light); display:none; width:100%; }
+.wheel-res { font-family:'DM Serif Display',serif; font-size:18px; color:var(--green); text-align:center; padding:12px 16px; background:var(--green-pale); border-radius:12px; border:1px solid var(--green-light); display:none; width:100%; }
+
+/* HOLD OVERVIEW */
+.hold-overview { background:white; border-radius:var(--radius); padding:16px 18px; box-shadow:0 2px 16px rgba(0,0,0,0.06); }
+.hold-ov-ttl { font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
+.hold-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f0ede8; }
+.hold-row:last-child { border-bottom:none; }
+.hold-rank { font-size:16px; width:28px; }
+.hold-name { font-weight:600; font-size:14px; flex:1; }
+.hold-score { font-family:'DM Serif Display',serif; font-size:20px; line-height:1; }
+.hold-diff { font-size:11px; font-weight:600; min-width:40px; text-align:right; }
+.hold-loading { text-align:center; padding:16px; color:var(--muted); font-size:13px; }
 
 /* NAV */
 .nav-row { display:flex; gap:10px; padding:12px 16px 24px; flex-shrink:0; }
@@ -174,11 +182,13 @@ body { background:var(--cream); font-family:'DM Sans',sans-serif; color:var(--in
 .r1{background:#FFD700;color:#3a2000} .r2{background:#C0C0C0;color:#333} .r3{background:#CD7F32;color:white}
 .rn{background:var(--cream);color:var(--muted);font-size:11px}
 .lb-empty { text-align:center; padding:40px 20px; color:var(--muted); font-size:14px; }
-.lb-refr  { text-align:center; padding:14px; color:var(--muted); font-size:12px; cursor:pointer; border-top:1px solid var(--border); flex-shrink:0; }
+.lb-refr  { display:flex; align-items:center; justify-content:center; gap:8px; padding:14px; color:var(--muted); font-size:13px; font-weight:500; cursor:pointer; border-top:1px solid var(--border); flex-shrink:0; }
+.lb-refr:active { color:var(--green); }
 
 /* LOADER */
 .loader { position:fixed; inset:0; background:rgba(26,92,54,0.92); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:999; color:white; }
 .spinner { width:40px; height:40px; border:3px solid rgba(255,255,255,0.3); border-top-color:white; border-radius:50%; animation:spin 0.8s linear infinite; margin-bottom:16px; }
+.spin-sm { width:20px; height:20px; border:2px solid rgba(255,255,255,0.3); border-top-color:white; border-radius:50%; animation:spin 0.8s linear infinite; display:inline-block; }
 @keyframes spin { to { transform:rotate(360deg); } }
 .hidden { display:none !important; }
 </style>
@@ -261,11 +271,15 @@ body { background:var(--cream); font-family:'DM Sans',sans-serif; color:var(--in
     </div>
   </div>
   <div class="lb-body" id="lb-body"><div class="lb-empty">Henter scores...</div></div>
-  <div class="lb-refr" onclick="loadLb()">↻ Opdater leaderboard</div>
+  <div class="lb-refr" onclick="loadLb()">↻ &nbsp;Opdater leaderboard</div>
 </div>
 
 <script>
-/* CONFIG */
+/* ══ CONFIG ══════════════════════════════════════════════════════════════ */
+const API_KEY = '$2a$10$pzdQ595ZXXiFINPyL5NRXOymulC1..wI88YDPwVL5fDu/imlKM7Xy';
+const BIN_NAME = 'pubgolf-scores';
+let BIN_ID = localStorage.getItem('pgBinId') || null;
+
 const HOLES = [
   { n:1, bar:"Ozburne",   drink:"En flaske øl",    par:4, bg:"#1a5c36",
     rNm:"Team Spirit 🥂",
@@ -285,44 +299,79 @@ const HOLES = [
     hasPen:false, hasBong:true,  hasWheel:false },
   { n:5, bar:"Klovnen",   drink:"Spin the wheel!", par:5, bg:"#6b1a1a",
     rNm:"Last Man Laughing 😂",
-    rule:"Kaptajnen spinner hjulet — hele holdet bestiller det samme. Regl: Du må ikke grine. Griner du → strafsslag.",
+    rule:"Kaptajnen spinner hjulet — hele holdet bestiller det samme. Du må ikke grine. Griner du → strafsslag.",
     hasPen:true,  hasBong:false, hasWheel:true  },
 ];
 const TOTAL_PAR  = HOLES.reduce((s,h)=>s+h.par,0);
-const WHEEL_OPTS = ["Skinny bitch 🍸","Pilsner 🍺","Guinness 🖤","Et andet hold bestemmer 🎯"];
-const WHEEL_CLR  = ["#1a5c36","#e8a020","#2a8c52","#8b1a1a"];
+const WHEEL_OPTS = ["Skinny bitch 🍸","Mørk øl 🍺","Guinness 🖤","Et andet hold bestemmer 🎯"];
+const WHEEL_CLR  = ["#1a5c36","#3a1a6b","#222222","#8b1a1a"];
 
-let holeIdx    = 0;
-let scores     = Array(5).fill(null);
-let penalties  = Array(5).fill(0);
-let bongRes    = Array(5).fill(null);
-let wheelRes   = Array(5).fill(null);
-let pName="", pTeam="", pCap=false;
-let prevScr    = "setup-screen";
-let lbTab      = "hold";
-let spinning   = false;
-let wheelAngle = 0;
+/* ══ STATE ═══════════════════════════════════════════════════════════════ */
+let holeIdx=0, scores=Array(5).fill(null), penalties=Array(5).fill(0);
+let bongRes=Array(5).fill(null), wheelRes=Array(5).fill(null);
+let pName="", pTeam="", pCap=false, prevScr="setup-screen", lbTab="hold";
+let spinning=false, wheelAngle=0;
 
-/* STORAGE */
-async function saveScore() {
-  const k=`pg:${Date.now()}:${Math.random().toString(36).slice(2,6)}`;
-  await window.storage.set(k, JSON.stringify({
-    name:pName, team:pTeam, cap:pCap,
-    scores, penalties, bongRes, total:calcTotal()
-  }), true);
+/* ══ JSONBIN API ══════════════════════════════════════════════════════════ */
+async function ensureBin() {
+  if (BIN_ID) return BIN_ID;
+  try {
+    const r = await fetch('https://api.jsonbin.io/v3/b', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'X-Access-Key':API_KEY, 'X-Bin-Name':BIN_NAME, 'X-Bin-Private':'false' },
+      body: JSON.stringify({ scores: [] })
+    });
+    const d = await r.json();
+    BIN_ID = d.metadata.id;
+    localStorage.setItem('pgBinId', BIN_ID);
+    return BIN_ID;
+  } catch(e) { return null; }
 }
+
+async function readBin() {
+  const id = await ensureBin();
+  if (!id) return { scores: [] };
+  try {
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${id}/latest`, {
+      headers: { 'X-Access-Key': API_KEY }
+    });
+    const d = await r.json();
+    return d.record || { scores: [] };
+  } catch(e) { return { scores: [] }; }
+}
+
+async function writeBin(data) {
+  const id = await ensureBin();
+  if (!id) return;
+  await fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type':'application/json', 'X-Access-Key':API_KEY },
+    body: JSON.stringify(data)
+  });
+}
+
+async function saveScore() {
+  const current = await readBin();
+  const existing = current.scores || [];
+  // Remove old entry from same player if exists
+  const filtered = existing.filter(p => !(p.name===pName && p.team===pTeam));
+  filtered.push({
+    name:pName, team:pTeam, cap:pCap,
+    scores, penalties, bongRes,
+    total: calcTotal(),
+    updatedAt: Date.now()
+  });
+  await writeBin({ scores: filtered });
+}
+
 async function fetchAll() {
   try {
-    const r=await window.storage.list("pg:",true);
-    const out=[];
-    for(const k of(r.keys||[])){
-      try{const v=await window.storage.get(k,true);if(v)out.push(JSON.parse(v.value));}catch(e){}
-    }
-    return out;
-  } catch(e){return[];}
+    const data = await readBin();
+    return data.scores || [];
+  } catch(e) { return []; }
 }
 
-/* HELPERS */
+/* ══ HELPERS ═════════════════════════════════════════════════════════════ */
 function resInfo(s,par){
   if(s===null)return{lbl:"—",cls:"r-empty"};
   const d=s-par;
@@ -333,19 +382,21 @@ function resInfo(s,par){
   if(d===2) return{lbl:"Double bogey 😬",cls:"r-double"};
   return{lbl:"Triple+ ☠️",cls:"r-triple"};
 }
-function effScore(i){
-  if(scores[i]===null)return 0;
-  const base=(scores[i]??0)+(penalties[i]??0);
-  return(i===3&&bongRes[i]==="win")?base-2:base;
+function effScore(i,sc=scores,pen=penalties,br=bongRes){
+  if(sc[i]===null)return 0;
+  const base=(sc[i]??0)+(pen[i]??0);
+  return(i===3&&br[i]==="win")?base-2:base;
 }
-function calcTotal(){return scores.reduce((a,v,i)=>a+(v!==null?effScore(i):0),0);}
+function calcTotal(sc=scores,pen=penalties,br=bongRes){
+  return sc.reduce((a,v,i)=>a+(v!==null?effScore(i,sc,pen,br):0),0);
+}
 function totalPen(){return penalties.reduce((a,b)=>a+b,0);}
 function dStr(s,p){const d=s-p;return d===0?"Par":d>0?`+${d}`:`${d}`;}
 function dClr(s,p){const d=s-p;return d<0?"#1a5c36":d>0?"#c0392b":"#555";}
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");}
 function loading(on,txt=""){document.getElementById("loader-txt").textContent=txt;document.getElementById("loader").classList.toggle("hidden",!on);}
 
-/* SETUP */
+/* ══ SETUP ═══════════════════════════════════════════════════════════════ */
 function startGame(){
   pName=document.getElementById("inp-name").value.trim();
   if(!pName){alert("Skriv dit navn 😊");return;}
@@ -356,15 +407,12 @@ function startGame(){
   buildProg();renderHole();show("game-screen");prevScr="game-screen";
 }
 
-/* PROGRESS */
+/* ══ PROGRESS ════════════════════════════════════════════════════════════ */
 function buildProg(){
   document.getElementById("prog-track").innerHTML=HOLES.map((_,i)=>`<div class="prog-dot" id="pd${i}"></div>`).join("");
 }
 function updProg(){
-  HOLES.forEach((_,i)=>{
-    const d=document.getElementById(`pd${i}`);
-    d.className="prog-dot"+(i<holeIdx?" done":i===holeIdx?" active":"");
-  });
+  HOLES.forEach((_,i)=>{const d=document.getElementById(`pd${i}`);d.className="prog-dot"+(i<holeIdx?" done":i===holeIdx?" active":"");});
 }
 function updHeader(){
   document.getElementById("hdr-name").textContent=pName+(pCap?" 🏌️":"");
@@ -373,36 +421,30 @@ function updHeader(){
   document.getElementById("hdr-pen").textContent=totalPen();
 }
 
-/* RENDER HOLE */
+/* ══ RENDER HOLE ══════════════════════════════════════════════════════════ */
 function renderHole(){
   updHeader();updProg();
   const h=HOLES[holeIdx];
   document.getElementById("g-header").style.background=h.bg;
-  const cnt=scores[holeIdx]??0;
-  const pen=penalties[holeIdx]??0;
+  const cnt=scores[holeIdx]??0, pen=penalties[holeIdx]??0;
   const info=resInfo(cnt,h.par);
+  const capBadge=(pCap&&holeIdx===4)?`<span class="cap-badge">🏌️ Du er kaptajn</span>`:"";
 
-  // Penalty block
-  const penHtml=h.hasPen?`
-    <div class="pen-section">
-      <div class="pen-ttl">Strafsslag</div>
-      <div class="pen-row">
-        <button class="pbtn" onclick="chgPen(-1)">−</button>
-        <div class="pnum" id="g-pen">${pen}</div>
-        <button class="pbtn" onclick="chgPen(1)">+</button>
-      </div>
-    </div>`:"";
+  const penHtml=h.hasPen?`<div class="pen-section">
+    <div class="pen-ttl">Strafsslag</div>
+    <div class="pen-row">
+      <button class="pbtn" onclick="chgPen(-1)">−</button>
+      <div class="pnum" id="g-pen">${pen}</div>
+      <button class="pbtn" onclick="chgPen(1)">+</button>
+    </div></div>`:"";
 
-  // Bong block (hole 4)
   const won=bongRes[holeIdx]==="win", lost=bongRes[holeIdx]==="lose";
-  const bongHtml=h.hasBong?`
-    <div class="act-card">
-      <div class="act-ttl">Ølbong udfordring 🍺</div>
-      <button class="act-btn ${won?"btn-green":"btn-ghost"}" onclick="setBong('win')">${won?"✅ Vandt! (−2 slag til holdet)":"Dit hold vandt ølbong → −2 slag"}</button>
-      <button class="act-btn ${lost?"btn-red":"btn-ghost"}" onclick="setBong('lose')">${lost?"❌ Tabte ølbong":"Dit hold tabte ølbong"}</button>
-    </div>`:"";
+  const bongHtml=h.hasBong?`<div class="act-card">
+    <div class="act-ttl">Ølbong udfordring 🍺</div>
+    <button class="act-btn ${won?"btn-green":"btn-ghost"}" onclick="setBong('win')">${won?"✅ Vandt! (−2 slag til holdet)":"Dit hold vandt ølbong → −2 slag"}</button>
+    <button class="act-btn ${lost?"btn-red":"btn-ghost"}" onclick="setBong('lose')">${lost?"❌ Tabte ølbong":"Dit hold tabte ølbong"}</button>
+  </div>`:"";
 
-  // Wheel block (hole 5)
   let wheelHtml="";
   if(h.hasWheel){
     const spinned=wheelRes[holeIdx];
@@ -421,15 +463,18 @@ function renderHole(){
     } else {
       wheelHtml=`<div class="act-card">
         <div class="act-ttl">🎡 Kaptajnen spinner hjulet</div>
-        <div style="text-align:center;padding:12px;color:var(--muted);font-size:14px">
-          ${spinned?`Hele holdet drikker:<br><strong style="color:var(--green);font-size:18px">${spinned}</strong>`:"Vent på kaptajnens spin..."}
+        <div style="text-align:center;padding:12px;color:var(--muted);font-size:14px" id="wheel-watcher">
+          ${spinned?`Hele holdet drikker:<br><strong style="color:var(--green);font-size:18px">${spinned}</strong>`:'<div class="spin-sm"></div> &nbsp;Vent på kaptajnens spin...'}
         </div>
       </div>`;
     }
   }
 
-  // Captain badge
-  const capBadge=(pCap&&holeIdx===4)?`<span class="cap-badge">🏌️ Du er kaptajn</span>`:"";
+  // Hold overview (fetched async)
+  const holdOvHtml=`<div class="hold-overview">
+    <div class="hold-ov-ttl">🏆 Stillingen</div>
+    <div id="hold-ov-body"><div class="hold-loading">Henter stillingen...</div></div>
+  </div>`;
 
   document.getElementById("hole-area").innerHTML=`
     <div class="hole-top">
@@ -459,7 +504,11 @@ function renderHole(){
     </div>
     ${bongHtml}
     ${wheelHtml}
+    ${holdOvHtml}
   `;
+
+  // Load hold overview async
+  loadHoldOverview();
 
   if(pCap&&holeIdx===4){
     requestAnimationFrame(()=>drawWheel(wheelAngle));
@@ -473,7 +522,36 @@ function renderHole(){
   nb.classList.toggle("fin",last);
 }
 
-/* COUNTER */
+/* ══ HOLD OVERVIEW (async) ════════════════════════════════════════════════ */
+async function loadHoldOverview(){
+  const body=document.getElementById("hold-ov-body");
+  if(!body)return;
+  try{
+    const players=await fetchAll();
+    if(!players.length){body.innerHTML=`<div class="hold-loading">Ingen scores endnu</div>`;return;}
+    const teams={};
+    players.forEach(p=>{if(!teams[p.team])teams[p.team]=[];teams[p.team].push(p);});
+    const arr=Object.entries(teams).map(([tn,ms])=>({
+      name:tn,
+      total:ms.reduce((s,m)=>s+m.total,0),
+      par:ms.length*TOTAL_PAR
+    })).sort((a,b)=>a.total-b.total);
+    const medals=["🥇","🥈","🥉","4️⃣"];
+    body.innerHTML=arr.map((t,i)=>{
+      const dc=dClr(t.total,t.par);
+      return`<div class="hold-row">
+        <div class="hold-rank">${medals[i]||i+1}</div>
+        <div class="hold-name">${t.name}</div>
+        <div>
+          <div class="hold-score">${t.total}</div>
+        </div>
+        <div class="hold-diff" style="color:${dc}">${dStr(t.total,t.par)}</div>
+      </div>`;
+    }).join("");
+  }catch(e){if(body)body.innerHTML=`<div class="hold-loading">Kunne ikke hente stillingen</div>`;}
+}
+
+/* ══ COUNTER ═════════════════════════════════════════════════════════════ */
 function chg(d){
   const n=Math.max(0,(scores[holeIdx]??0)+d);
   scores[holeIdx]=n;
@@ -487,23 +565,21 @@ function chgPen(d){
   const el=document.getElementById("g-pen");if(el)el.textContent=penalties[holeIdx];
   updHeader();
 }
-function setBong(res){
-  bongRes[holeIdx]=res;
-  renderHole();
-}
+function setBong(res){bongRes[holeIdx]=res;renderHole();}
 
-/* WHEEL */
+/* ══ WHEEL ═══════════════════════════════════════════════════════════════ */
 function drawWheel(angle){
   const cv=document.getElementById("wcanvas");if(!cv)return;
   const ctx=cv.getContext("2d");
   const cx=130,cy=130,r=122,arc=(Math.PI*2)/WHEEL_OPTS.length;
   ctx.clearRect(0,0,260,260);
   WHEEL_OPTS.forEach((opt,i)=>{
-    const s=angle+i*arc-Math.PI/2,e=s+arc;
-    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s,e);
+    const start=angle+i*arc-Math.PI/2;
+    const end=start+arc;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);
     ctx.fillStyle=WHEEL_CLR[i%WHEEL_CLR.length];ctx.fill();
     ctx.strokeStyle="white";ctx.lineWidth=2;ctx.stroke();
-    ctx.save();ctx.translate(cx,cy);ctx.rotate(s+arc/2);
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(start+arc/2);
     ctx.textAlign="right";ctx.fillStyle="white";ctx.font="bold 11px 'DM Sans',sans-serif";
     const words=opt.split(" ");let line="",y=-6;
     words.forEach((w,wi)=>{
@@ -514,34 +590,40 @@ function drawWheel(angle){
   });
   ctx.beginPath();ctx.arc(cx,cy,12,0,Math.PI*2);ctx.fillStyle="white";ctx.fill();
 }
+
 function doSpin(){
   if(spinning)return;spinning=true;
   const btn=document.getElementById("spin-btn");if(btn)btn.disabled=true;
-  const totalRot=Math.PI*2*(5+Math.random()*5),dur=3500,start=performance.now(),sa=wheelAngle;
+  const totalRot=Math.PI*2*(6+Math.random()*6),dur=4000,start=performance.now(),sa=wheelAngle;
   function frame(now){
-    const t=Math.min((now-start)/dur,1),ease=1-(1-t)*(1-t)*(1-t);
-    wheelAngle=sa+totalRot*ease;drawWheel(wheelAngle);
+    const t=Math.min((now-start)/dur,1);
+    // Ease out cubic
+    const ease=1-(1-t)*(1-t)*(1-t);
+    wheelAngle=sa+totalRot*ease;
+    drawWheel(wheelAngle);
     if(t<1){requestAnimationFrame(frame);return;}
+    // Fix: pointer is at top = -PI/2 in standard coords
+    // Normalize angle so 0 = pointer position
     const arc=(Math.PI*2)/WHEEL_OPTS.length;
-    const norm=((wheelAngle%(Math.PI*2))+(Math.PI*2))%(Math.PI*2);
-    const idx=Math.floor(((Math.PI*2-norm+Math.PI/2)%(Math.PI*2))/arc)%WHEEL_OPTS.length;
-    wheelRes[holeIdx]=WHEEL_OPTS[idx];
-    try{window.storage.set(`pgwheel:${pTeam}`,WHEEL_OPTS[idx],true);}catch(e){}
+    const norm=(((-wheelAngle+Math.PI/2)%( Math.PI*2))+(Math.PI*2))%(Math.PI*2);
+    const idx=Math.floor(norm/arc)%WHEEL_OPTS.length;
+    const result=WHEEL_OPTS[idx];
+    wheelRes[holeIdx]=result;
     const el=document.getElementById("wres");
-    if(el){el.style.display="block";el.textContent="Hele holdet drikker: "+WHEEL_OPTS[idx];}
+    if(el){el.style.display="block";el.textContent="Hele holdet drikker: "+result;}
     spinning=false;if(btn)btn.disabled=false;
   }
   requestAnimationFrame(frame);
 }
 
-/* NAVIGATION */
+/* ══ NAVIGATION ══════════════════════════════════════════════════════════ */
 function nav(d){
   const n=holeIdx+d;if(n<0)return;
   if(n>=HOLES.length){finishRound();return;}
   holeIdx=n;renderHole();
 }
 
-/* FINISH */
+/* ══ FINISH ══════════════════════════════════════════════════════════════ */
 async function finishRound(){
   loading(true,"Gemmer din score...");
   try{await saveScore();}catch(e){}
@@ -568,7 +650,7 @@ function showResults(){
   }).join("");
 }
 
-/* LEADERBOARD */
+/* ══ LEADERBOARD ══════════════════════════════════════════════════════════ */
 function openLb(){prevScr=document.querySelector(".screen.active")?.id||"game-screen";show("lb-screen");loadLb();}
 function closeLb(){show(prevScr);}
 function setTab(t){
@@ -577,10 +659,10 @@ function setTab(t){
   renderLb(window._lbP||[]);
 }
 async function loadLb(){
-  document.getElementById("lb-body").innerHTML=`<div class="lb-empty">Henter scores...</div>`;
-  loading(true,"Henter leaderboard...");
-  const players=await fetchAll();window._lbP=players;
-  loading(false);renderLb(players);
+  document.getElementById("lb-body").innerHTML=`<div class="lb-empty"><div class="spinner" style="margin:0 auto 12px"></div>Henter scores...</div>`;
+  const players=await fetchAll();
+  window._lbP=players;
+  renderLb(players);
 }
 function renderLb(players){
   const body=document.getElementById("lb-body");
@@ -623,6 +705,7 @@ function renderLb(players){
     }).join("");
   }
 }
+
 function restart(){document.getElementById("inp-name").value="";document.getElementById("cap-tog").checked=false;show("setup-screen");prevScr="setup-screen";}
 </script>
 </body>

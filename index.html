@@ -266,23 +266,23 @@ const API_KEY = '$2a$10$pzdQ595ZXXiFINPyL5NRXOymulC1..wI88YDPwVL5fDu/imlKM7Xy';
 const BIN_ID  = '69cad60736566621a862a8fe';
 
 const HOLES = [
-  { n:1, bar:"Ozburne",   drink:"En flaske øl",    par:4, bg:"#1a5c36",
+  { n:1, bar:"Ozburne",   drink:"En flaske øl",    par:3, bg:"#1a5c36",
     rNm:"Team Spirit 🥂",
     rule:"Hver gang du tager en tår, skal hele holdet skåle — og derefter må du drikke. Er du den sidste der drikker, skal du skåle med en anden gruppe.",
     hasPen:false, hasBong:false, hasWheel:false },
-  { n:2, bar:"Brus",      drink:"Valgfri fadøl",   par:5, bg:"#185c4a",
+  { n:2, bar:"Brus",      drink:"Valgfri fadøl",   par:2, bg:"#185c4a",
     rNm:"Silent 🤫",
     rule:"Når du har fået din øl, må du ikke sige et ord, før glasset er tomt. Enhver lyd = strafsslag.",
     hasPen:true, hasBong:false, hasWheel:false },
-  { n:3, bar:"Tempelbar", drink:"Valgfri øl",      par:5, bg:"#2a4a1a",
+  { n:3, bar:"Tempelbar", drink:"Valgfri øl",      par:4, bg:"#2a4a1a",
     rNm:"Caddy 🏌️",
     rule:"Du må ikke selv holde din øl mens du drikker — en holdkammerat skal holde glasset for dig. Holder du selv = strafsslag.",
     hasPen:true, hasBong:false, hasWheel:false },
-  { n:4, bar:"Dega",      drink:"Drink (valgfri)", par:6, bg:"#3a1a6b",
+  { n:4, bar:"Dega",      drink:"Drink (valgfri)", par:2, bg:"#3a1a6b",
     rNm:"Redemption 🍺",
     rule:"Alle får en drink. Men der er chance for redemption: én fra hvert hold dyster i ølbong. Den hurtigste giver −2 slag til hele holdet. Vandt dit hold?",
     hasPen:false, hasBong:true, hasWheel:false },
-  { n:5, bar:"Klovnen",   drink:"Spin the wheel!", par:5, bg:"#6b1a1a",
+  { n:5, bar:"Klovnen",   drink:"Spin the wheel!", par:3, bg:"#6b1a1a",
     rNm:"Last Man Laughing 😂",
     rule:"Kaptajnen spinner hjulet — hele holdet bestiller det samme. Du må ikke grine. Griner du → strafsslag.",
     hasPen:true, hasBong:false, hasWheel:true },
@@ -334,6 +334,7 @@ async function fetchAll() {
 /* ══ HELPERS ═════════════════════════════════════════════════════════════ */
 function resInfo(s, par) {
   if (s === null) return { lbl:"—", cls:"r-empty" };
+  if (s === 1)   return { lbl:"Hole in one! 🕳️", cls:"r-eagle" };
   const d = s - par;
   if (d <= -2) return { lbl:"Eagle 🦅",       cls:"r-eagle" };
   if (d === -1) return { lbl:"Birdie 🐦",      cls:"r-birdie" };

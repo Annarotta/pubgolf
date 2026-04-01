@@ -107,7 +107,6 @@ body { background:var(--cream); font-family:'DM Sans',sans-serif; color:var(--in
 .btn-green { background:var(--green); color:white; }
 .btn-ghost { background:var(--cream); border:1.5px solid var(--border); color:var(--muted); }
 .btn-red   { background:var(--red); color:white; }
-.btn-amber { background:var(--amber); color:#3a2000; }
 
 /* WHEEL */
 .wheel-wrap { display:flex; flex-direction:column; align-items:center; gap:16px; }
@@ -116,17 +115,6 @@ body { background:var(--cream); font-family:'DM Sans',sans-serif; color:var(--in
 .spin-btn { padding:14px 32px; background:var(--green); color:white; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:600; cursor:pointer; }
 .spin-btn:disabled { background:var(--muted); cursor:not-allowed; }
 .wheel-res { font-family:'DM Serif Display',serif; font-size:18px; color:var(--green); text-align:center; padding:12px 16px; background:var(--green-pale); border-radius:12px; border:1px solid var(--green-light); display:none; width:100%; }
-
-/* HOLD OVERVIEW */
-.hold-overview { background:white; border-radius:var(--radius); padding:16px 18px; box-shadow:0 2px 16px rgba(0,0,0,0.06); }
-.hold-ov-ttl { font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
-.hold-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f0ede8; }
-.hold-row:last-child { border-bottom:none; }
-.hold-rank { font-size:16px; width:28px; }
-.hold-name { font-weight:600; font-size:14px; flex:1; }
-.hold-score { font-family:'DM Serif Display',serif; font-size:20px; line-height:1; }
-.hold-diff { font-size:11px; font-weight:600; min-width:40px; text-align:right; }
-.hold-loading { text-align:center; padding:16px; color:var(--muted); font-size:13px; }
 
 /* NAV */
 .nav-row { display:flex; gap:10px; padding:12px 16px 24px; flex-shrink:0; }
@@ -183,12 +171,10 @@ body { background:var(--cream); font-family:'DM Sans',sans-serif; color:var(--in
 .rn{background:var(--cream);color:var(--muted);font-size:11px}
 .lb-empty { text-align:center; padding:40px 20px; color:var(--muted); font-size:14px; }
 .lb-refr  { display:flex; align-items:center; justify-content:center; gap:8px; padding:14px; color:var(--muted); font-size:13px; font-weight:500; cursor:pointer; border-top:1px solid var(--border); flex-shrink:0; }
-.lb-refr:active { color:var(--green); }
 
 /* LOADER */
 .loader { position:fixed; inset:0; background:rgba(26,92,54,0.92); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:999; color:white; }
 .spinner { width:40px; height:40px; border:3px solid rgba(255,255,255,0.3); border-top-color:white; border-radius:50%; animation:spin 0.8s linear infinite; margin-bottom:16px; }
-.spin-sm { width:20px; height:20px; border:2px solid rgba(255,255,255,0.3); border-top-color:white; border-radius:50%; animation:spin 0.8s linear infinite; display:inline-block; }
 @keyframes spin { to { transform:rotate(360deg); } }
 .hidden { display:none !important; }
 </style>
@@ -275,10 +261,9 @@ body { background:var(--cream); font-family:'DM Sans',sans-serif; color:var(--in
 </div>
 
 <script>
-/* ══ CONFIG ══════════════════════════════════════════════════════════════ */
+/* ══ CONFIG — hardcoded ══════════════════════════════════════════════════ */
 const API_KEY = '$2a$10$pzdQ595ZXXiFINPyL5NRXOymulC1..wI88YDPwVL5fDu/imlKM7Xy';
-const BIN_NAME = 'pubgolf-scores';
-let BIN_ID = localStorage.getItem('pgBinId') || null;
+const BIN_ID  = '69cad60736566621a862a8fe';
 
 const HOLES = [
   { n:1, bar:"Ozburne",   drink:"En flaske øl",    par:4, bg:"#1a5c36",
@@ -288,23 +273,23 @@ const HOLES = [
   { n:2, bar:"Brus",      drink:"Valgfri fadøl",   par:5, bg:"#185c4a",
     rNm:"Silent 🤫",
     rule:"Når du har fået din øl, må du ikke sige et ord, før glasset er tomt. Enhver lyd = strafsslag.",
-    hasPen:true,  hasBong:false, hasWheel:false },
+    hasPen:true, hasBong:false, hasWheel:false },
   { n:3, bar:"Tempelbar", drink:"Valgfri øl",      par:5, bg:"#2a4a1a",
     rNm:"Caddy 🏌️",
-    rule:"Du må ikke selv holde din øl, mens du drikker — en holdkammerat skal holde glasset for dig. Holder du selv = strafsslag.",
-    hasPen:true,  hasBong:false, hasWheel:false },
+    rule:"Du må ikke selv holde din øl mens du drikker — en holdkammerat skal holde glasset for dig. Holder du selv = strafsslag.",
+    hasPen:true, hasBong:false, hasWheel:false },
   { n:4, bar:"Dega",      drink:"Drink (valgfri)", par:6, bg:"#3a1a6b",
     rNm:"Redemption 🍺",
     rule:"Alle får en drink. Men der er chance for redemption: én fra hvert hold dyster i ølbong. Den hurtigste giver −2 slag til hele holdet. Vandt dit hold?",
-    hasPen:false, hasBong:true,  hasWheel:false },
+    hasPen:false, hasBong:true, hasWheel:false },
   { n:5, bar:"Klovnen",   drink:"Spin the wheel!", par:5, bg:"#6b1a1a",
     rNm:"Last Man Laughing 😂",
     rule:"Kaptajnen spinner hjulet — hele holdet bestiller det samme. Du må ikke grine. Griner du → strafsslag.",
-    hasPen:true,  hasBong:false, hasWheel:true  },
+    hasPen:true, hasBong:false, hasWheel:true },
 ];
-const TOTAL_PAR  = HOLES.reduce((s,h)=>s+h.par,0);
+const TOTAL_PAR  = HOLES.reduce((s,h)=>s+h.par, 0);
 const WHEEL_OPTS = ["Skinny bitch 🍸","Mørk øl 🍺","Guinness 🖤","Et andet hold bestemmer 🎯"];
-const WHEEL_CLR  = ["#1a5c36","#3a1a6b","#222222","#8b1a1a"];
+const WHEEL_CLR  = ["#1a5c36","#3a1a6b","#111111","#8b1a1a"];
 
 /* ══ STATE ═══════════════════════════════════════════════════════════════ */
 let holeIdx=0, scores=Array(5).fill(null), penalties=Array(5).fill(0);
@@ -312,27 +297,10 @@ let bongRes=Array(5).fill(null), wheelRes=Array(5).fill(null);
 let pName="", pTeam="", pCap=false, prevScr="setup-screen", lbTab="hold";
 let spinning=false, wheelAngle=0;
 
-/* ══ JSONBIN API ══════════════════════════════════════════════════════════ */
-async function ensureBin() {
-  if (BIN_ID) return BIN_ID;
-  try {
-    const r = await fetch('https://api.jsonbin.io/v3/b', {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json', 'X-Access-Key':API_KEY, 'X-Bin-Name':BIN_NAME, 'X-Bin-Private':'false' },
-      body: JSON.stringify({ scores: [] })
-    });
-    const d = await r.json();
-    BIN_ID = d.metadata.id;
-    localStorage.setItem('pgBinId', BIN_ID);
-    return BIN_ID;
-  } catch(e) { return null; }
-}
-
+/* ══ JSONBIN ═════════════════════════════════════════════════════════════ */
 async function readBin() {
-  const id = await ensureBin();
-  if (!id) return { scores: [] };
   try {
-    const r = await fetch(`https://api.jsonbin.io/v3/b/${id}/latest`, {
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
       headers: { 'X-Access-Key': API_KEY }
     });
     const d = await r.json();
@@ -340,116 +308,111 @@ async function readBin() {
   } catch(e) { return { scores: [] }; }
 }
 
-async function writeBin(data) {
-  const id = await ensureBin();
-  if (!id) return;
-  await fetch(`https://api.jsonbin.io/v3/b/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type':'application/json', 'X-Access-Key':API_KEY },
-    body: JSON.stringify(data)
-  });
-}
-
 async function saveScore() {
   const current = await readBin();
   const existing = current.scores || [];
-  // Remove old entry from same player if exists
-  const filtered = existing.filter(p => !(p.name===pName && p.team===pTeam));
+  // Replace existing entry for same player+team, or add new
+  const filtered = existing.filter(p => !(p.name === pName && p.team === pTeam));
   filtered.push({
-    name:pName, team:pTeam, cap:pCap,
+    name: pName, team: pTeam, cap: pCap,
     scores, penalties, bongRes,
     total: calcTotal(),
     updatedAt: Date.now()
   });
-  await writeBin({ scores: filtered });
+  await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', 'X-Access-Key': API_KEY },
+    body: JSON.stringify({ scores: filtered })
+  });
 }
 
 async function fetchAll() {
-  try {
-    const data = await readBin();
-    return data.scores || [];
-  } catch(e) { return []; }
+  const data = await readBin();
+  return data.scores || [];
 }
 
 /* ══ HELPERS ═════════════════════════════════════════════════════════════ */
-function resInfo(s,par){
-  if(s===null)return{lbl:"—",cls:"r-empty"};
-  const d=s-par;
-  if(d<=-2)return{lbl:"Eagle 🦅",cls:"r-eagle"};
-  if(d===-1)return{lbl:"Birdie 🐦",cls:"r-birdie"};
-  if(d===0) return{lbl:"Par ⛳",cls:"r-par"};
-  if(d===1) return{lbl:"Bogey 😅",cls:"r-bogey"};
-  if(d===2) return{lbl:"Double bogey 😬",cls:"r-double"};
-  return{lbl:"Triple+ ☠️",cls:"r-triple"};
+function resInfo(s, par) {
+  if (s === null) return { lbl:"—", cls:"r-empty" };
+  const d = s - par;
+  if (d <= -2) return { lbl:"Eagle 🦅",       cls:"r-eagle" };
+  if (d === -1) return { lbl:"Birdie 🐦",      cls:"r-birdie" };
+  if (d ===  0) return { lbl:"Par ⛳",          cls:"r-par" };
+  if (d ===  1) return { lbl:"Bogey 😅",        cls:"r-bogey" };
+  if (d ===  2) return { lbl:"Double bogey 😬", cls:"r-double" };
+  return               { lbl:"Triple+ ☠️",     cls:"r-triple" };
 }
-function effScore(i,sc=scores,pen=penalties,br=bongRes){
-  if(sc[i]===null)return 0;
-  const base=(sc[i]??0)+(pen[i]??0);
-  return(i===3&&br[i]==="win")?base-2:base;
+function effScore(i, sc=scores, pen=penalties, br=bongRes) {
+  if (sc[i] === null) return 0;
+  const base = (sc[i]??0) + (pen[i]??0);
+  return (i===3 && br[i]==="win") ? base-2 : base;
 }
-function calcTotal(sc=scores,pen=penalties,br=bongRes){
-  return sc.reduce((a,v,i)=>a+(v!==null?effScore(i,sc,pen,br):0),0);
+function calcTotal(sc=scores, pen=penalties, br=bongRes) {
+  return sc.reduce((a,v,i) => a + (v!==null ? effScore(i,sc,pen,br) : 0), 0);
 }
-function totalPen(){return penalties.reduce((a,b)=>a+b,0);}
-function dStr(s,p){const d=s-p;return d===0?"Par":d>0?`+${d}`:`${d}`;}
-function dClr(s,p){const d=s-p;return d<0?"#1a5c36":d>0?"#c0392b":"#555";}
-function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");}
-function loading(on,txt=""){document.getElementById("loader-txt").textContent=txt;document.getElementById("loader").classList.toggle("hidden",!on);}
+function totalPen() { return penalties.reduce((a,b)=>a+b, 0); }
+function dStr(s,p) { const d=s-p; return d===0?"Par":d>0?`+${d}`:`${d}`; }
+function dClr(s,p) { const d=s-p; return d<0?"#1a5c36":d>0?"#c0392b":"#555"; }
+function show(id) { document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active")); document.getElementById(id).classList.add("active"); }
+function loading(on, txt="") { document.getElementById("loader-txt").textContent=txt; document.getElementById("loader").classList.toggle("hidden",!on); }
 
 /* ══ SETUP ═══════════════════════════════════════════════════════════════ */
-function startGame(){
-  pName=document.getElementById("inp-name").value.trim();
-  if(!pName){alert("Skriv dit navn 😊");return;}
-  pTeam=document.getElementById("inp-team").value;
-  pCap=document.getElementById("cap-tog").checked;
-  holeIdx=0;scores=Array(5).fill(null);penalties=Array(5).fill(0);
-  bongRes=Array(5).fill(null);wheelRes=Array(5).fill(null);
-  buildProg();renderHole();show("game-screen");prevScr="game-screen";
+function startGame() {
+  pName = document.getElementById("inp-name").value.trim();
+  if (!pName) { alert("Skriv dit navn 😊"); return; }
+  pTeam = document.getElementById("inp-team").value;
+  pCap  = document.getElementById("cap-tog").checked;
+  holeIdx=0; scores=Array(5).fill(null); penalties=Array(5).fill(0);
+  bongRes=Array(5).fill(null); wheelRes=Array(5).fill(null);
+  buildProg(); renderHole(); show("game-screen"); prevScr="game-screen";
 }
 
 /* ══ PROGRESS ════════════════════════════════════════════════════════════ */
-function buildProg(){
-  document.getElementById("prog-track").innerHTML=HOLES.map((_,i)=>`<div class="prog-dot" id="pd${i}"></div>`).join("");
+function buildProg() {
+  document.getElementById("prog-track").innerHTML = HOLES.map((_,i)=>`<div class="prog-dot" id="pd${i}"></div>`).join("");
 }
-function updProg(){
-  HOLES.forEach((_,i)=>{const d=document.getElementById(`pd${i}`);d.className="prog-dot"+(i<holeIdx?" done":i===holeIdx?" active":"");});
+function updProg() {
+  HOLES.forEach((_,i)=>{
+    const d=document.getElementById(`pd${i}`);
+    d.className="prog-dot"+(i<holeIdx?" done":i===holeIdx?" active":"");
+  });
 }
-function updHeader(){
-  document.getElementById("hdr-name").textContent=pName+(pCap?" 🏌️":"");
-  document.getElementById("hdr-meta").textContent=pTeam;
-  document.getElementById("hdr-tot").textContent=calcTotal();
-  document.getElementById("hdr-pen").textContent=totalPen();
+function updHeader() {
+  document.getElementById("hdr-name").textContent = pName+(pCap?" 🏌️":"");
+  document.getElementById("hdr-meta").textContent = pTeam;
+  document.getElementById("hdr-tot").textContent  = calcTotal();
+  document.getElementById("hdr-pen").textContent  = totalPen();
 }
 
 /* ══ RENDER HOLE ══════════════════════════════════════════════════════════ */
-function renderHole(){
-  updHeader();updProg();
-  const h=HOLES[holeIdx];
-  document.getElementById("g-header").style.background=h.bg;
+function renderHole() {
+  updHeader(); updProg();
+  const h = HOLES[holeIdx];
+  document.getElementById("g-header").style.background = h.bg;
   const cnt=scores[holeIdx]??0, pen=penalties[holeIdx]??0;
-  const info=resInfo(cnt,h.par);
-  const capBadge=(pCap&&holeIdx===4)?`<span class="cap-badge">🏌️ Du er kaptajn</span>`:"";
+  const info = resInfo(cnt, h.par);
+  const capBadge = (pCap&&holeIdx===4) ? `<span class="cap-badge">🏌️ Du er kaptajn</span>` : "";
 
-  const penHtml=h.hasPen?`<div class="pen-section">
+  const penHtml = h.hasPen ? `<div class="pen-section">
     <div class="pen-ttl">Strafsslag</div>
     <div class="pen-row">
       <button class="pbtn" onclick="chgPen(-1)">−</button>
       <div class="pnum" id="g-pen">${pen}</div>
       <button class="pbtn" onclick="chgPen(1)">+</button>
-    </div></div>`:"";
+    </div></div>` : "";
 
   const won=bongRes[holeIdx]==="win", lost=bongRes[holeIdx]==="lose";
-  const bongHtml=h.hasBong?`<div class="act-card">
+  const bongHtml = h.hasBong ? `<div class="act-card">
     <div class="act-ttl">Ølbong udfordring 🍺</div>
     <button class="act-btn ${won?"btn-green":"btn-ghost"}" onclick="setBong('win')">${won?"✅ Vandt! (−2 slag til holdet)":"Dit hold vandt ølbong → −2 slag"}</button>
     <button class="act-btn ${lost?"btn-red":"btn-ghost"}" onclick="setBong('lose')">${lost?"❌ Tabte ølbong":"Dit hold tabte ølbong"}</button>
-  </div>`:"";
+  </div>` : "";
 
-  let wheelHtml="";
-  if(h.hasWheel){
-    const spinned=wheelRes[holeIdx];
-    if(pCap){
-      wheelHtml=`<div class="act-card">
+  let wheelHtml = "";
+  if (h.hasWheel) {
+    const spinned = wheelRes[holeIdx];
+    if (pCap) {
+      wheelHtml = `<div class="act-card">
         <div class="act-ttl">Spin the wheel! 🎡</div>
         <div class="wheel-wrap">
           <div class="wheel-canvas-wrap">
@@ -461,22 +424,16 @@ function renderHole(){
         </div>
       </div>`;
     } else {
-      wheelHtml=`<div class="act-card">
+      wheelHtml = `<div class="act-card">
         <div class="act-ttl">🎡 Kaptajnen spinner hjulet</div>
-        <div style="text-align:center;padding:12px;color:var(--muted);font-size:14px" id="wheel-watcher">
-          ${spinned?`Hele holdet drikker:<br><strong style="color:var(--green);font-size:18px">${spinned}</strong>`:'<div class="spin-sm"></div> &nbsp;Vent på kaptajnens spin...'}
+        <div style="text-align:center;padding:12px;color:var(--muted);font-size:14px">
+          ${spinned ? `Hele holdet drikker:<br><strong style="color:var(--green);font-size:18px">${spinned}</strong>` : "Vent på kaptajnens spin..."}
         </div>
       </div>`;
     }
   }
 
-  // Hold overview (fetched async)
-  const holdOvHtml=`<div class="hold-overview">
-    <div class="hold-ov-ttl">🏆 Stillingen</div>
-    <div id="hold-ov-body"><div class="hold-loading">Henter stillingen...</div></div>
-  </div>`;
-
-  document.getElementById("hole-area").innerHTML=`
+  document.getElementById("hole-area").innerHTML = `
     <div class="hole-top">
       <div class="hole-hdr" style="background:${h.bg}">
         <div><div class="hole-num-lbl">Hul</div><div class="hole-num">${h.n}</div></div>
@@ -504,143 +461,111 @@ function renderHole(){
     </div>
     ${bongHtml}
     ${wheelHtml}
-    ${holdOvHtml}
   `;
 
-  // Load hold overview async
-  loadHoldOverview();
-
-  if(pCap&&holeIdx===4){
+  if (pCap && holeIdx===4) {
     requestAnimationFrame(()=>drawWheel(wheelAngle));
-    if(wheelRes[holeIdx]){const el=document.getElementById("wres");if(el)el.style.display="block";}
+    if (wheelRes[holeIdx]) { const el=document.getElementById("wres"); if(el) el.style.display="block"; }
   }
 
-  document.getElementById("btn-prev").style.visibility=holeIdx===0?"hidden":"visible";
-  const nb=document.getElementById("btn-next");
-  const last=holeIdx===HOLES.length-1;
-  nb.textContent=last?"Afslut runden 🏁":"Næste hul →";
-  nb.classList.toggle("fin",last);
-}
-
-/* ══ HOLD OVERVIEW (async) ════════════════════════════════════════════════ */
-async function loadHoldOverview(){
-  const body=document.getElementById("hold-ov-body");
-  if(!body)return;
-  try{
-    const players=await fetchAll();
-    if(!players.length){body.innerHTML=`<div class="hold-loading">Ingen scores endnu</div>`;return;}
-    const teams={};
-    players.forEach(p=>{if(!teams[p.team])teams[p.team]=[];teams[p.team].push(p);});
-    const arr=Object.entries(teams).map(([tn,ms])=>({
-      name:tn,
-      total:ms.reduce((s,m)=>s+m.total,0),
-      par:ms.length*TOTAL_PAR
-    })).sort((a,b)=>a.total-b.total);
-    const medals=["🥇","🥈","🥉","4️⃣"];
-    body.innerHTML=arr.map((t,i)=>{
-      const dc=dClr(t.total,t.par);
-      return`<div class="hold-row">
-        <div class="hold-rank">${medals[i]||i+1}</div>
-        <div class="hold-name">${t.name}</div>
-        <div>
-          <div class="hold-score">${t.total}</div>
-        </div>
-        <div class="hold-diff" style="color:${dc}">${dStr(t.total,t.par)}</div>
-      </div>`;
-    }).join("");
-  }catch(e){if(body)body.innerHTML=`<div class="hold-loading">Kunne ikke hente stillingen</div>`;}
+  document.getElementById("btn-prev").style.visibility = holeIdx===0 ? "hidden" : "visible";
+  const nb = document.getElementById("btn-next");
+  const last = holeIdx===HOLES.length-1;
+  nb.textContent = last ? "Afslut runden 🏁" : "Næste hul →";
+  nb.classList.toggle("fin", last);
 }
 
 /* ══ COUNTER ═════════════════════════════════════════════════════════════ */
-function chg(d){
-  const n=Math.max(0,(scores[holeIdx]??0)+d);
-  scores[holeIdx]=n;
-  const info=resInfo(n,HOLES[holeIdx].par);
-  const c=document.getElementById("g-cnt");if(c)c.textContent=n;
-  const r=document.getElementById("g-res");if(r){r.textContent=n>0?info.lbl:"—";r.className="cres "+(n>0?info.cls:"r-empty");}
+function chg(d) {
+  const n = Math.max(0, (scores[holeIdx]??0)+d);
+  scores[holeIdx] = n;
+  const info = resInfo(n, HOLES[holeIdx].par);
+  const c=document.getElementById("g-cnt"); if(c) c.textContent=n;
+  const r=document.getElementById("g-res"); if(r) { r.textContent=n>0?info.lbl:"—"; r.className="cres "+(n>0?info.cls:"r-empty"); }
   updHeader();
 }
-function chgPen(d){
-  penalties[holeIdx]=Math.max(0,(penalties[holeIdx]??0)+d);
-  const el=document.getElementById("g-pen");if(el)el.textContent=penalties[holeIdx];
+function chgPen(d) {
+  penalties[holeIdx] = Math.max(0, (penalties[holeIdx]??0)+d);
+  const el=document.getElementById("g-pen"); if(el) el.textContent=penalties[holeIdx];
   updHeader();
 }
-function setBong(res){bongRes[holeIdx]=res;renderHole();}
+function setBong(res) { bongRes[holeIdx]=res; renderHole(); }
 
 /* ══ WHEEL ═══════════════════════════════════════════════════════════════ */
-function drawWheel(angle){
-  const cv=document.getElementById("wcanvas");if(!cv)return;
+function drawWheel(angle) {
+  const cv=document.getElementById("wcanvas"); if(!cv) return;
   const ctx=cv.getContext("2d");
-  const cx=130,cy=130,r=122,arc=(Math.PI*2)/WHEEL_OPTS.length;
+  const cx=130, cy=130, r=122, arc=(Math.PI*2)/WHEEL_OPTS.length;
   ctx.clearRect(0,0,260,260);
-  WHEEL_OPTS.forEach((opt,i)=>{
-    const start=angle+i*arc-Math.PI/2;
-    const end=start+arc;
-    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);
-    ctx.fillStyle=WHEEL_CLR[i%WHEEL_CLR.length];ctx.fill();
-    ctx.strokeStyle="white";ctx.lineWidth=2;ctx.stroke();
-    ctx.save();ctx.translate(cx,cy);ctx.rotate(start+arc/2);
-    ctx.textAlign="right";ctx.fillStyle="white";ctx.font="bold 11px 'DM Sans',sans-serif";
-    const words=opt.split(" ");let line="",y=-6;
-    words.forEach((w,wi)=>{
+  WHEEL_OPTS.forEach((opt,i) => {
+    const start=angle+i*arc-Math.PI/2, end=start+arc;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,start,end);
+    ctx.fillStyle=WHEEL_CLR[i%WHEEL_CLR.length]; ctx.fill();
+    ctx.strokeStyle="white"; ctx.lineWidth=2; ctx.stroke();
+    ctx.save(); ctx.translate(cx,cy); ctx.rotate(start+arc/2);
+    ctx.textAlign="right"; ctx.fillStyle="white"; ctx.font="bold 11px 'DM Sans',sans-serif";
+    const words=opt.split(" "); let line="", y=-6;
+    words.forEach((w,wi) => {
       const t=line+(wi>0?" ":"")+w;
-      if(t.length>11&&wi>0){ctx.fillText(line,r-8,y);line=w;y+=14;}else line=t;
+      if(t.length>11&&wi>0) { ctx.fillText(line,r-8,y); line=w; y+=14; } else line=t;
     });
-    ctx.fillText(line,r-8,y);ctx.restore();
+    ctx.fillText(line,r-8,y); ctx.restore();
   });
-  ctx.beginPath();ctx.arc(cx,cy,12,0,Math.PI*2);ctx.fillStyle="white";ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,12,0,Math.PI*2); ctx.fillStyle="white"; ctx.fill();
 }
 
-function doSpin(){
-  if(spinning)return;spinning=true;
-  const btn=document.getElementById("spin-btn");if(btn)btn.disabled=true;
-  const totalRot=Math.PI*2*(6+Math.random()*6),dur=4000,start=performance.now(),sa=wheelAngle;
-  function frame(now){
-    const t=Math.min((now-start)/dur,1);
-    // Ease out cubic
+function doSpin() {
+  if (spinning) return;
+  spinning=true;
+  const btn=document.getElementById("spin-btn"); if(btn) btn.disabled=true;
+  const totalRot=Math.PI*2*(6+Math.random()*6), dur=4000, t0=performance.now(), sa=wheelAngle;
+  function frame(now) {
+    const t=Math.min((now-t0)/dur,1);
     const ease=1-(1-t)*(1-t)*(1-t);
     wheelAngle=sa+totalRot*ease;
     drawWheel(wheelAngle);
-    if(t<1){requestAnimationFrame(frame);return;}
-    // Fix: pointer is at top = -PI/2 in standard coords
-    // Normalize angle so 0 = pointer position
+    if(t<1) { requestAnimationFrame(frame); return; }
+    // Pointer sits at top (angle = -PI/2 from canvas zero)
+    // We need to find which segment is at the top after spinning
     const arc=(Math.PI*2)/WHEEL_OPTS.length;
-    const norm=(((-wheelAngle+Math.PI/2)%( Math.PI*2))+(Math.PI*2))%(Math.PI*2);
-    const idx=Math.floor(norm/arc)%WHEEL_OPTS.length;
-    const result=WHEEL_OPTS[idx];
-    wheelRes[holeIdx]=result;
+    // normalise wheelAngle so segment 0 starts at top
+    const norm = ((-wheelAngle % (Math.PI*2)) + Math.PI*2) % (Math.PI*2);
+    const idx = Math.floor(norm/arc) % WHEEL_OPTS.length;
+    const result = WHEEL_OPTS[idx];
+    wheelRes[holeIdx] = result;
     const el=document.getElementById("wres");
-    if(el){el.style.display="block";el.textContent="Hele holdet drikker: "+result;}
-    spinning=false;if(btn)btn.disabled=false;
+    if(el) { el.style.display="block"; el.textContent="Hele holdet drikker: "+result; }
+    spinning=false; if(btn) btn.disabled=false;
   }
   requestAnimationFrame(frame);
 }
 
 /* ══ NAVIGATION ══════════════════════════════════════════════════════════ */
-function nav(d){
-  const n=holeIdx+d;if(n<0)return;
-  if(n>=HOLES.length){finishRound();return;}
-  holeIdx=n;renderHole();
+function nav(d) {
+  const n=holeIdx+d; if(n<0) return;
+  if(n>=HOLES.length) { finishRound(); return; }
+  holeIdx=n; renderHole();
 }
 
 /* ══ FINISH ══════════════════════════════════════════════════════════════ */
-async function finishRound(){
-  loading(true,"Gemmer din score...");
-  try{await saveScore();}catch(e){}
-  loading(false);showResults();prevScr="results-screen";
+async function finishRound() {
+  loading(true, "Gemmer din score...");
+  try { await saveScore(); } catch(e) { console.error(e); }
+  loading(false);
+  showResults(); prevScr="results-screen";
 }
-function showResults(){
+function showResults() {
   show("results-screen");
-  const tot=calcTotal(),diff=tot-TOTAL_PAR;
-  document.getElementById("r-plyr").textContent=`${pName} · ${pTeam}${pCap?" 🏌️":""}`;
-  document.getElementById("r-scr").textContent=tot;
-  document.getElementById("r-dif").textContent=diff===0?"Par":diff>0?`+${diff} over par`:`${Math.abs(diff)} under par`;
-  document.getElementById("r-list").innerHTML=HOLES.map((h,i)=>{
-    const s=scores[i],p=penalties[i]??0,eff=effScore(i);
+  const tot=calcTotal(), diff=tot-TOTAL_PAR;
+  document.getElementById("r-plyr").textContent = `${pName} · ${pTeam}${pCap?" 🏌️":""}`;
+  document.getElementById("r-scr").textContent  = tot;
+  document.getElementById("r-dif").textContent  = diff===0?"Par":diff>0?`+${diff} over par`:`${Math.abs(diff)} under par`;
+  document.getElementById("r-list").innerHTML   = HOLES.map((h,i) => {
+    const s=scores[i], p=penalties[i]??0, eff=effScore(i);
     const info=resInfo(s,h.par);
     const bNote=i===3&&bongRes[i]==="win"?" (−2 bong)":"";
     const pNote=p>0?`<div class="res-pen">+${p} strafsslag</div>`:"";
-    return`<div class="res-row">
+    return `<div class="res-row">
       <div class="res-left"><div class="res-hn">${i+1}</div>
         <div><div class="res-bar">${h.bar}</div><div class="res-drk">${h.drink} · par ${h.par}</div>${pNote}</div></div>
       <div class="res-right">
@@ -651,50 +576,56 @@ function showResults(){
 }
 
 /* ══ LEADERBOARD ══════════════════════════════════════════════════════════ */
-function openLb(){prevScr=document.querySelector(".screen.active")?.id||"game-screen";show("lb-screen");loadLb();}
-function closeLb(){show(prevScr);}
-function setTab(t){
+function openLb() { prevScr=document.querySelector(".screen.active")?.id||"game-screen"; show("lb-screen"); loadLb(); }
+function closeLb() { show(prevScr); }
+function setTab(t) {
   lbTab=t;
   document.querySelectorAll(".lb-tab").forEach((el,i)=>el.classList.toggle("active",(i===0&&t==="hold")||(i===1&&t==="individual")));
   renderLb(window._lbP||[]);
 }
-async function loadLb(){
-  document.getElementById("lb-body").innerHTML=`<div class="lb-empty"><div class="spinner" style="margin:0 auto 12px"></div>Henter scores...</div>`;
+async function loadLb() {
+  document.getElementById("lb-body").innerHTML=`<div class="lb-empty"><div style="width:32px;height:32px;border:3px solid #ccc;border-top-color:var(--green);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px"></div>Henter scores...</div>`;
   const players=await fetchAll();
   window._lbP=players;
   renderLb(players);
 }
-function renderLb(players){
+function renderLb(players) {
   const body=document.getElementById("lb-body");
-  if(!players.length){body.innerHTML=`<div class="lb-empty">Ingen scores endnu — vær den første! 🏌️</div>`;return;}
-  if(lbTab==="individual"){
+  if(!players.length) { body.innerHTML=`<div class="lb-empty">Ingen scores endnu — vær den første! 🏌️</div>`; return; }
+  if(lbTab==="individual") {
     const sorted=[...players].sort((a,b)=>a.total-b.total);
     body.innerHTML=sorted.map((p,idx)=>{
-      const rc=["r1","r2","r3"][idx]||"rn",rl=["🥇","🥈","🥉"][idx]||(idx+1);
-      const played=p.scores.filter(s=>s!==null).length,dc=dClr(p.total,TOTAL_PAR);
-      return`<div class="lb-card"><div style="display:flex;align-items:center;gap:12px;padding:14px 16px">
+      const rc=["r1","r2","r3"][idx]||"rn", rl=["🥇","🥈","🥉"][idx]||(idx+1);
+      const played=p.scores.filter(s=>s!==null).length, dc=dClr(p.total,TOTAL_PAR);
+      return `<div class="lb-card"><div style="display:flex;align-items:center;gap:12px;padding:14px 16px">
         <div class="rank ${rc}">${rl}</div>
         <div style="flex:1"><div style="font-weight:600;font-size:15px">${p.name}${p.cap?" 🏌️":""}</div>
         <div style="font-size:11px;color:var(--muted)">${p.team} · ${played}/5 huller</div></div>
-        <div style="text-align:right"><div style="font-family:'DM Serif Display',serif;font-size:24px;line-height:1">${p.total}</div>
-        <div style="font-size:12px;font-weight:600;color:${dc}">${dStr(p.total,TOTAL_PAR)}</div></div>
+        <div style="text-align:right">
+          <div style="font-family:'DM Serif Display',serif;font-size:24px;line-height:1">${p.total}</div>
+          <div style="font-size:12px;font-weight:600;color:${dc}">${dStr(p.total,TOTAL_PAR)}</div>
+        </div>
       </div></div>`;
     }).join("");
   } else {
     const teams={};
-    players.forEach(p=>{if(!teams[p.team])teams[p.team]=[];teams[p.team].push(p);});
-    const arr=Object.entries(teams).map(([tn,ms])=>({name:tn,members:ms,total:ms.reduce((s,m)=>s+m.total,0),tpar:ms.length*TOTAL_PAR})).sort((a,b)=>a.total-b.total);
+    players.forEach(p=>{ if(!teams[p.team]) teams[p.team]=[]; teams[p.team].push(p); });
+    const arr=Object.entries(teams).map(([tn,ms])=>({
+      name:tn, members:ms,
+      total:ms.reduce((s,m)=>s+m.total,0),
+      tpar:ms.length*TOTAL_PAR
+    })).sort((a,b)=>a.total-b.total);
     body.innerHTML=arr.map((t,ti)=>{
-      const rc=["r1","r2","r3"][ti]||"rn",rl=["🥇","🥈","🥉"][ti]||(ti+1);
+      const rc=["r1","r2","r3"][ti]||"rn", rl=["🥇","🥈","🥉"][ti]||(ti+1);
       const dc=dClr(t.total,t.tpar);
       const mRows=[...t.members].sort((a,b)=>a.total-b.total).map(m=>{
-        const played=m.scores.filter(s=>s!==null).length,mdc=dClr(m.total,TOTAL_PAR);
-        return`<div class="lb-mem">
+        const played=m.scores.filter(s=>s!==null).length, mdc=dClr(m.total,TOTAL_PAR);
+        return `<div class="lb-mem">
           <div><div class="lb-mn">${m.name}${m.cap?" 🏌️":""}</div><div class="lb-ms">${played}/5 huller</div></div>
           <div class="lb-mr"><div class="lb-msc">${m.total}</div><div class="lb-mdf" style="color:${mdc}">${dStr(m.total,TOTAL_PAR)}</div></div>
         </div>`;
       }).join("");
-      return`<div class="lb-card">
+      return `<div class="lb-card">
         <div class="lb-ch">
           <div style="display:flex;align-items:center;gap:10px">
             <div class="rank ${rc}">${rl}</div>
@@ -706,7 +637,7 @@ function renderLb(players){
   }
 }
 
-function restart(){document.getElementById("inp-name").value="";document.getElementById("cap-tog").checked=false;show("setup-screen");prevScr="setup-screen";}
+function restart() { document.getElementById("inp-name").value=""; document.getElementById("cap-tog").checked=false; show("setup-screen"); prevScr="setup-screen"; }
 </script>
 </body>
 </html>
